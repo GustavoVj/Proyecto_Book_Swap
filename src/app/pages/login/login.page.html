@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="login()">
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label>
+      <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" class="ion-margin-top">
+      Iniciar sesión
+    </ion-button>
+
+    <ion-button expand="block" color="primary" (click)="loginWithGoogle()">
+      Iniciar sesión con Google
+    </ion-button>
+
+    <ion-button fill="clear" expand="block" (click)="goToRegistro()">
+      Crear una cuenta
+    </ion-button>
+  </form>
+</ion-content>
