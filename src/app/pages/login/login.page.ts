@@ -5,12 +5,13 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
+import { HeaderComponent } from 'src/app/header/header/header.component';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, IonicModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule, HeaderComponent],
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })

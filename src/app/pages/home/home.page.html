@@ -1,19 +1,17 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Catálogo de Libros 📚</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
-<ion-content class="ion-padding">
+<ion-content>
+  <ion-button (click)="goToAgregar()" color="success" expand="full">Agregar Libro</ion-button>
+
   <ion-list>
-    <ion-item *ngFor="let book of books$ | async">
-      <ion-thumbnail slot="start" *ngIf="book.imageUrl">
-        <img [src]="book.imageUrl" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ book.title }}</h2>
-        <p>{{ book.author }}</p>
+    <ion-item *ngFor="let libro of books$ | async">
+      <ion-label (click)="verDetalle(libro)">
+        <h2>{{ libro.title }}</h2>
+        <p>{{ libro.author }}</p>
       </ion-label>
+
+      <ion-button *ngIf="esDueno(libro)" fill="outline" color="warning" (click)="editBook(libro)">Editar</ion-button>
+      <ion-button *ngIf="esDueno(libro)" color="danger" (click)="deleteBook(libro)">Eliminar</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

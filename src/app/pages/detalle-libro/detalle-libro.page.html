@@ -1,13 +1,21 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>detalle-libro</ion-title>
+    <ion-title>Detalle del Libro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detalle-libro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content *ngIf="libro">
+  <ion-card>
+    <img *ngIf="libro.imageUrl" [src]="libro.imageUrl"/>
+    <ion-card-header>
+      <ion-card-title>{{ libro.title }}</ion-card-title>
+      <ion-card-subtitle>{{ libro.author }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ libro.description }}</p>
+    </ion-card-content>
+
+    <ion-button *ngIf="esDueno()" fill="outline" color="warning" (click)="editBook()">Editar</ion-button>
+    <ion-button *ngIf="esDueno()" color="danger" (click)="deleteBook()">Eliminar</ion-button>
+  </ion-card>
 </ion-content>

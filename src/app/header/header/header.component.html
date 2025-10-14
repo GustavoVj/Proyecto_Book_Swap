@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>BookSwap</ion-title>
+
+    <ion-buttons slot="end">
+      <ng-container *ngIf="(user$ | async) as user; else loginButton">
+        <ion-button (click)="goToProfile()">
+          <ion-avatar slot="icon-only">
+            <img [src]="user.photoURL || 'assets/default-avatar.png'" />
+          </ion-avatar>
+        </ion-button>
+        <ion-button (click)="logout()">Salir</ion-button>
+      </ng-container>
+
+      <ng-template #loginButton>
+        <ion-button (click)="goToLogin()">Iniciar sesión</ion-button>
+      </ng-template>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
