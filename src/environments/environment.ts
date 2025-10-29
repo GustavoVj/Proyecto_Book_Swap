@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyDVhjO46TQsZf3hvDSE-lOOkTV0vxarbVs",
+    //apiKey: "", //Solicitar por correo electrónico
     authDomain: "bookswap-7d64a.firebaseapp.com",
     projectId: "bookswap-7d64a",
     storageBucket: "bookswap-7d64a.firebasestorage.app",
