@@ -1,18 +1,18 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Crear Cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="register()">
+  <form (ngSubmit)="registrar()" novalidate>
     <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
+      <ion-label position="floating">Nombre completo</ion-label>
       <ion-input [(ngModel)]="displayName" name="displayName" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Correo</ion-label>
+      <ion-label position="floating">Correo electrónico</ion-label>
       <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
     </ion-item>
 
@@ -21,8 +21,20 @@
       <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit" class="ion-margin-top">
-      Registrarse
+    <ion-button expand="block" type="submit" class="ion-margin-top" color="success">
+      Crear cuenta
     </ion-button>
+
+    <ion-button expand="block" fill="outline" color="medium" (click)="loginWithGoogle()">
+      <ion-icon name="logo-google" slot="start"></ion-icon>
+      Registrarse con Google
+    </ion-button>
+
+    <ion-text color="medium">
+      <p class="ion-text-center ion-margin-top">
+        ¿Ya tienes cuenta?
+        <a routerLink="/login">Inicia sesión aquí</a>
+      </p>
+    </ion-text>
   </form>
 </ion-content>

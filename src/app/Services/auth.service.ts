@@ -1,56 +1,79 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut, UserCredential, user } from '@angular/fire/auth';
+import {
+  Auth,
+  user,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { User } from '../Models/user';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-   user$: Observable<any>;
+  user$: Observable<any>;
+
   constructor(private auth: Auth, private firestore: Firestore) {
     this.user$ = user(this.auth);
   }
 
-  // Registro con email y password
-  async register(email: string, password: string, displayName?: string): Promise<UserCredential> {
-    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
-
-    // Guardamos datos del usuario en Firestore
-    const userData: User = {
-      uid: cred.user.uid,
-      email: cred.user.email!,
-      displayName: displayName || cred.user.displayName || ''
-    };
-    await setDoc(doc(this.firestore, 'users', cred.user.uid), userData);
-    return cred;
+  /* Devuelve el UID del usuario actual */
+  getUserId(): string | null {
+    return this.auth.currentUser?.uid ?? null;
   }
 
-  // Inicio con correo
-  async login(email: string, password: string): Promise<UserCredential> {
-    return await signInWithEmailAndPassword(this.auth, email, password);
-  }
-
-  // Inicio con Google
-  async loginWithGoogle(): Promise<UserCredential> {
-    const provider = new GoogleAuthProvider();
-    const cred = await signInWithPopup(this.auth, provider);
-
-    // Guardar o actualizar usuario en Firestore
-    const userData: User = {
-      uid: cred.user.uid,
-      email: cred.user.email!,
-      displayName: cred.user.displayName!,
-      photoURL: cred.user.photoURL!
-    };
-    await setDoc(doc(this.firestore, 'users', cred.user.uid), userData);
-    return cred;
-  }
-
-  async logout(): Promise<void> {
-    return await signOut(this.auth);
-  }
-
+  /* Devuelve el usuario actual */
   get currentUser() {
     return this.auth.currentUser;
+  }
+
+  /* Registro con email y contraseña */
+  async register(email: string, password: string, displayName?: string) {
+    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+    const userData = {
+      uid: cred.user.uid,
+      email: cred.user.email,
+      displayName: displayName || email.split('@')[0],
+      photoURL: cred.user.photoURL || 'assets/default-user.jpg',
+    };
+    await setDoc(doc(this.firestore, 'users', cred.user.uid), userData, { merge: true });
+    return cred;
+  }
+
+  /* Login con email y contraseña */
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  /* Login con Google */
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(this.auth, provider);
+    const user = result.user;
+
+    await setDoc(
+      doc(this.firestore, 'users', user.uid),
+      {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || '',
+        photoURL: user.photoURL || 'assets/default-user.jpg',
+      },
+      { merge: true }
+    );
+
+    return result;
+  }
+
+  /* Cerrar sesión (principal) */
+  async signOut() {
+    await signOut(this.auth);
+  }
+
+  /* Compatibilidad: alias para signOut() */
+  logout() {
+    return this.signOut();
   }
 }

@@ -1,17 +1,60 @@
 <app-header></app-header>
 
-<ion-content>
-  <ion-button (click)="goToAgregar()" color="success" expand="full">Agregar Libro</ion-button>
+<ion-content class="app-content">
+  <div class="page-container">
+    <div class="book-list" *ngIf="books$ | async as books; else noBooks">
+      <div
+        class="book-card"
+        *ngFor="let book of books"
+        (click)="verDetalle(book)"
+      >
+        <div class="book-info">
+          <img
+            [src]="book.coverUrl || 'assets/placeholder-book.png'"
+            alt="Portada"
+            class="book-cover"
+            (error)="onImageError($event)"
+          />
 
-  <ion-list>
-    <ion-item *ngFor="let libro of books$ | async">
-      <ion-label (click)="verDetalle(libro)">
-        <h2>{{ libro.title }}</h2>
-        <p>{{ libro.author }}</p>
-      </ion-label>
+          <div class="book-details">
+            <h2>{{ book.title }}</h2>
+            <p>{{ book.author }}</p>
 
-      <ion-button *ngIf="esDueno(libro)" fill="outline" color="warning" (click)="editBook(libro)">Editar</ion-button>
-      <ion-button *ngIf="esDueno(libro)" color="danger" (click)="deleteBook(libro)">Eliminar</ion-button>
-    </ion-item>
-  </ion-list>
+            <!-- Botones de acción -->
+            <div class="actions" *ngIf="esDueno(book)">
+              <ion-button
+                fill="clear"
+                color="primary"
+                (click)="editBook(book); $event.stopPropagation()"
+              >
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button
+                fill="clear"
+                color="danger"
+                (click)="deleteBook(book.id!); $event.stopPropagation()"
+              >
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noBooks>
+      <div class="empty">
+        <ion-icon name="book-outline"></ion-icon>
+        <p>No hay libros disponibles.</p>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- FAB para agregar libro -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button class="btn-primary" (click)="goToAgregar()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -1,0 +1,88 @@
+ion-content.app-content {
+  --background: #f7f8fc;
+}
+
+.perfil-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.perfil-card {
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.foto-container {
+  position: relative;
+  margin-bottom: 20px;
+
+  .foto-usuario {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    border: 3px solid #6c63ff;
+  }
+
+  .btn-cambiar {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: #6c63ff;
+  }
+}
+
+.info {
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 10px 0 4px;
+    color: #1e1e1e;
+  }
+
+  .email {
+    color: #666;
+    font-size: 0.95rem;
+  }
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+
+  .btn-home {
+    --background: #6c63ff;
+    --background-activated: #5a52e0;
+    --border-radius: 18px;
+    --color: #fff;
+    font-weight: 600;
+  }
+
+  ion-button[fill='outline'] {
+    --border-color: #e53935;
+    --color: #e53935;
+    --border-radius: 18px;
+    font-weight: 600;
+  }
+}
+
+.not-logged {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+
+  ion-button {
+    margin-top: 10px;
+  }
+}

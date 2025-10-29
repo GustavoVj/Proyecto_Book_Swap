@@ -1,0 +1,99 @@
+ion-content.app-content {
+  --background: #f7f8fc;
+}
+
+.page-container {
+  padding: 20px;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.book-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.book-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.book-cover {
+  width: 70px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.book-details {
+  flex: 1;
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e1e1e;
+  }
+
+  p {
+    margin: 4px 0 8px;
+    color: #6c757d;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+ion-button[fill='clear'] {
+  --padding-start: 6px;
+  --padding-end: 6px;
+}
+
+ion-icon {
+  font-size: 22px;
+}
+
+.empty {
+  text-align: center;
+  color: #6c63ff;
+  margin-top: 60px;
+
+  ion-icon {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+  }
+}
+
+/* Botón flotante */
+ion-fab-button.btn-primary {
+  --background: #6c63ff;
+  --background-activated: #5a52e0;
+  --border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3);
+}

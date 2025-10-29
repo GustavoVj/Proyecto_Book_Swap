@@ -1,31 +1,90 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ isEdit ? 'Editar Libro' : 'Agregar Libro' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
-<ion-content>
-  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="floating">Título</ion-label>
-      <ion-input formControlName="title"></ion-input>
-    </ion-item>
+<ion-content class="app-content">
+  <div class="page-container">
+    <ion-card class="book-form-card">
+      <ion-card-content>
 
-    <ion-item>
-      <ion-label position="floating">Autor</ion-label>
-      <ion-input formControlName="author"></ion-input>
-    </ion-item>
+        <!-- 📘 Campo: Título -->
+        <ion-item lines="none">
+          <ion-label position="floating">Título</ion-label>
+          <ion-input
+            [(ngModel)]="book.title"
+            placeholder="Ej. Introducción a Angular"
+          ></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-textarea formControlName="description"></ion-textarea>
-    </ion-item>
+        <!-- ✍️ Campo: Autor -->
+        <ion-item lines="none">
+          <ion-label position="floating">Autor</ion-label>
+          <ion-input
+            [(ngModel)]="book.author"
+            placeholder="Ej. John Doe"
+          ></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Imagen (URL)</ion-label>
-      <ion-input formControlName="imageUrl"></ion-input>
-    </ion-item>
+        <!-- 📝 Campo: Descripción -->
+        <ion-item lines="none">
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-textarea
+            auto-grow="true"
+            [(ngModel)]="book.description"
+            placeholder="Describe brevemente el libro..."
+          ></ion-textarea>
+        </ion-item>
 
-    <ion-button expand="full" type="submit">{{ isEdit ? 'Actualizar' : 'Agregar' }}</ion-button>
-  </form>
+        <!-- 🌆 Campo: URL de portada -->
+        <ion-item lines="none">
+          <ion-label position="floating">URL de la portada</ion-label>
+          <ion-input
+            [(ngModel)]="coverUrlValue"
+            placeholder="https://..."
+          ></ion-input>
+        </ion-item>
+
+        <!-- 🖼️ Vista previa -->
+        <div class="preview-container" *ngIf="coverUrlValue">
+          <img
+            [src]="coverUrlValue"
+            alt="Vista previa"
+            class="preview-image"
+            (error)="onImageError($event)"
+          />
+        </div>
+
+        <!-- 🟢 Botones de acción -->
+        <div class="form-actions">
+          <!-- Guardar o Actualizar -->
+          <ion-button expand="block" class="btn-primary" (click)="isEditing ? editar() : crear()">
+            <ion-icon slot="start" [name]="isEditing ? 'create-outline' : 'save-outline'"></ion-icon>
+            {{ isEditing ? 'Actualizar libro' : 'Guardar libro' }}
+          </ion-button>
+
+          <!-- Eliminar solo si está editando -->
+          <ion-button
+            *ngIf="isEditing"
+            expand="block"
+            color="danger"
+            fill="outline"
+            (click)="borrar()"
+          >
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Eliminar libro
+          </ion-button>
+
+          <!-- Cancelar -->
+          <ion-button
+            expand="block"
+            fill="clear"
+            routerLink="/home"
+            class="btn-cancelar"
+          >
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Cancelar
+          </ion-button>
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

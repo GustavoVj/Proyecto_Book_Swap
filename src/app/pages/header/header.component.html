@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar class="app-toolbar">
+    <ion-title class="clickable-title" (click)="router.navigate(['/home'])">
+      BookSwap
+    </ion-title>
+
+    <div class="user-section" *ngIf="user$ | async as user; else invitado">
+      <ion-button fill="clear" (click)="goToSolicitudes()" title="Solicitudes">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="goToPerfil()" title="Perfil">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" color="light" (click)="logout()" title="Cerrar sesión">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <ng-template #invitado>
+      <ion-button fill="clear" color="light" (click)="goToLogin()" title="Iniciar sesión">
+        <ion-icon name="log-in-outline"></ion-icon>
+      </ion-button>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>

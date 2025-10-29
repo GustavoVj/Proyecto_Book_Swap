@@ -1,0 +1,64 @@
+ion-toolbar.app-toolbar {
+  --background: #6c63ff;
+  --color: #fff;
+  text-align: center;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clickable-title {
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+.clickable-title:hover {
+  opacity: 0.85;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 10px;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.user-avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.title-click {
+  cursor: pointer;
+}
+
+ion-toolbar {
+  --background: var(--ion-color-light, #f8f8f8);
+  --color: var(--ion-color-dark, #222);
+}
+
+ion-icon {
+  font-size: 1.4rem;
+}

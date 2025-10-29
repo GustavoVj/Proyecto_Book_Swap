@@ -1,21 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Detalle del Libro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header>📚 Detalles</app-header>
 
-<ion-content *ngIf="libro">
-  <ion-card>
-    <img *ngIf="libro.imageUrl" [src]="libro.imageUrl"/>
-    <ion-card-header>
-      <ion-card-title>{{ libro.title }}</ion-card-title>
-      <ion-card-subtitle>{{ libro.author }}</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <p>{{ libro.description }}</p>
-    </ion-card-content>
+<ion-content class="app-content">
+  <div class="page-container" *ngIf="book$ | async as book; else cargando">
 
-    <ion-button *ngIf="esDueno()" fill="outline" color="warning" (click)="editBook()">Editar</ion-button>
-    <ion-button *ngIf="esDueno()" color="danger" (click)="deleteBook()">Eliminar</ion-button>
-  </ion-card>
+    <div class="book-card">
+      <img
+        [src]="book.coverUrl || 'assets/placeholder-book.png'"
+        alt="Portada del libro"
+        class="book-image"
+        (error)="onImageError($event)"
+      />
+
+      <div class="book-details">
+        <h1>{{ book.title }}</h1>
+        <p class="author">{{ book.author }}</p>
+
+        <p class="description" *ngIf="book.description; else sinDescripcion">
+          {{ book.description }}
+        </p>
+        <ng-template #sinDescripcion>
+          <p class="description muted">Sin descripción disponible.</p>
+        </ng-template>
+      </div>
+
+      <div class="actions">
+        <ng-container *ngIf="esDueno(book); else noOwner">
+          <ion-button expand="block" class="btn-primary" (click)="editar(book)">
+            Editar
+          </ion-button>
+          <ion-button expand="block" class="btn-outline" (click)="eliminar(book)">
+            Eliminar
+          </ion-button>
+        </ng-container>
+
+        <ng-template #noOwner>
+          <ion-button expand="block" color="primary" (click)="solicitarIntercambio(book)">
+            <ion-icon name="swap-horizontal-outline" slot="start"></ion-icon>
+            Solicitar intercambio
+          </ion-button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #cargando>
+    <div class="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando libro...</p>
+    </div>
+  </ng-template>
 </ion-content>

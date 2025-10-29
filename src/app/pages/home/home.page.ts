@@ -1,66 +1,90 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { BooksService, Book } from '../../Services/books.service';
+import { Router, RouterModule } from '@angular/router';
+import { BooksService } from '../../Services/books.service';
+import { AuthService } from '../../Services/auth.service';
+import { Book } from '../../Models/book.model';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
-import { HeaderComponent } from 'src/app/header/header/header.component';
+import { HeaderComponent } from '../header/header.component';
+
+// Importación de Ionicons (necesario en Ionic 8+)
+import { addIcons } from 'ionicons';
+import {
+  addOutline,
+  createOutline,
+  trashOutline,
+  bookOutline,
+} from 'ionicons/icons';
+
+addIcons({
+  'add-outline': addOutline,
+  'create-outline': createOutline,
+  'trash-outline': trashOutline,
+  'book-outline': bookOutline,
+});
 
 @Component({
-  selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, CommonModule, HeaderComponent],
+  selector: 'app-home',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+  styleUrls: ['./home.page.scss'],
+  imports: [IonicModule, CommonModule, RouterModule, HeaderComponent],
 })
 export class HomePage implements OnInit {
   books$!: Observable<Book[]>;
-  currentUserId: string | null = null;
+  userId: string | null = null;
 
   constructor(
     private booksService: BooksService,
-    private router: Router,
-    private auth: Auth
+    private authService: AuthService,
+    private toastCtrl: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    // Escuchar sesión activa
+    this.authService.user$.subscribe((user) => (this.userId = user?.uid ?? null));
     this.books$ = this.booksService.getBooks();
-
-    this.auth.onAuthStateChanged(user => {
-      this.currentUserId = user?.uid || null;
-    });
   }
 
-  goToLogin() {
-    this.router.navigate(['/login']);
+  onImageError(event: any) {
+    event.target.src = 'assets/default-book.jpg';
+  }
+
+  esDueno(book: Book): boolean {
+    return book.ownerId === this.userId;
   }
 
   goToAgregar() {
     this.router.navigate(['/form-libro']);
   }
 
-  verDetalle(libro: Book) {
-    if (!this.currentUserId) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.router.navigate(['/detalle-libro', libro.id]);
+  verDetalle(book: Book) {
+    this.router.navigate(['/detalle-libro', book.id]);
   }
 
-  editBook(libro: Book) {
-    this.router.navigate(['/form-libro', libro.id]);
+  editBook(book: Book) {
+    this.router.navigate(['/form-libro'], { queryParams: { id: book.id } });
   }
 
-  deleteBook(libro: Book) {
-    if (confirm('¿Deseas eliminar este libro?')) {
-      this.booksService.deleteBook(libro.id!).then(() => {
-        alert('Libro eliminado correctamente');
+  async deleteBook(id: string) {
+    try {
+      await this.booksService.deleteBook(id);
+      const toast = await this.toastCtrl.create({
+        message: 'Libro eliminado',
+        duration: 1800,
+        color: 'success',
       });
+      await toast.present();
+    } catch (err) {
+      console.error(err);
+      const toast = await this.toastCtrl.create({
+        message: 'No se pudo eliminar',
+        duration: 1800,
+        color: 'danger',
+      });
+      await toast.present();
     }
-  }
-
-  esDueno(libro: Book): boolean {
-    return libro.ownerId === this.currentUserId;
   }
 }

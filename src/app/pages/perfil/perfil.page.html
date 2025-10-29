@@ -1,13 +1,53 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">perfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="app-content">
+  <div class="perfil-container" *ngIf="user; else notLogged">
+    <div class="perfil-card">
+      <div class="foto-container">
+        <img
+          [src]="user.photoURL || 'assets/default-avatar.png'"
+          alt="Foto de perfil"
+          class="foto-usuario"
+        />
+        <ion-button
+          fill="clear"
+          color="primary"
+          size="small"
+          class="btn-cambiar"
+          (click)="cambiarFoto()"
+        >
+          Cambiar foto
+        </ion-button>
+      </div>
+
+      <div class="info">
+        <h2>{{ user.displayName || 'Usuario' }}</h2>
+        <p class="email">{{ user.email }}</p>
+      </div>
+
+      <div class="acciones">
+        <ion-button expand="block" color="primary" class="btn-home" routerLink="/home">
+          Ir al inicio
+        </ion-button>
+
+        <ion-button
+          *ngIf="userId"
+          [routerLink]="['/reviews', userId]"
+          color="primary">
+          Ver reseñas ⭐
+        </ion-button>
+
+        <ion-button expand="block" fill="outline" color="danger" (click)="logout()">
+          Cerrar sesión
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #notLogged>
+    <div class="not-logged">
+      <p>No has iniciado sesión.</p>
+      <ion-button routerLink="/login" color="primary">Iniciar sesión</ion-button>
+    </div>
+  </ng-template>
 </ion-content>

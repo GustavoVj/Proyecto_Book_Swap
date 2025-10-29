@@ -1,0 +1,49 @@
+.page-container {
+  padding: 16px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #6c63ff;
+  font-weight: 700;
+}
+
+.review-card {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  padding: 12px;
+
+  .stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 4px;
+
+    ion-icon {
+      font-size: 1.3rem;
+      color: #ccc;
+    }
+    .filled {
+      color: #ffc107;
+    }
+  }
+
+  .comment {
+    font-style: italic;
+    margin-bottom: 6px;
+    color: #333;
+  }
+
+  .date {
+    font-size: 0.8rem;
+    color: #777;
+  }
+}
+
+.muted {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+}

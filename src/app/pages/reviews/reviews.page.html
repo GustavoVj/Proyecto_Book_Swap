@@ -1,0 +1,39 @@
+<app-header>⭐ Reseñas</app-header>
+
+<ion-content class="app-content">
+  <div class="page-container">
+    <h1 class="title">Reseñas del usuario</h1>
+
+    <ng-container *ngIf="reviews$ | async as reviews; else cargando">
+      <div class="rating-summary">
+        <h2 *ngIf="reviews.length > 0">
+          Promedio: {{ averageRating | number: '1.1-1' }} ⭐
+        </h2>
+        <p *ngIf="reviews.length === 0">Este usuario aún no tiene reseñas.</p>
+      </div>
+
+      <div *ngIf="reviews.length > 0">
+        <div class="review-card" *ngFor="let r of reviews">
+          <div class="review-header">
+            <div class="stars">
+              <ion-icon
+                *ngFor="let s of [1, 2, 3, 4, 5]"
+                name="star"
+                [color]="s <= r.rating ? 'warning' : 'medium'"
+              ></ion-icon>
+            </div>
+            <p class="date">{{ r.createdAt | date: 'medium' }}</p>
+          </div>
+          <p class="comment">{{ r.comment || 'Sin comentarios.' }}</p>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #cargando>
+      <div class="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Cargando reseñas...</p>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>

@@ -1,0 +1,59 @@
+.page-container {
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin-top: 1.2rem;
+  font-weight: 500;
+}
+
+.request-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.request-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.request-details {
+  flex: 1;
+  margin-left: 0.8rem;
+}
+
+.avatar {
+  font-size: 1.5rem;
+}
+
+.status {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.status.pending {
+  color: #ff9800;
+}
+.status.accepted {
+  color: #4caf50;
+}
+.status.rejected {
+  color: #f44336;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+}

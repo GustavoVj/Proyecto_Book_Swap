@@ -5,7 +5,7 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
-import { HeaderComponent } from 'src/app/header/header/header.component';
+import { HeaderComponent } from 'src/app/pages/header/header.component';
 
 
 @Component({

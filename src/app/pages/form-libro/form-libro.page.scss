@@ -1,0 +1,71 @@
+:host {
+  ion-toolbar.app-toolbar {
+    --background: #6c63ff;
+    --color: #fff;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  ion-content.app-content {
+    --background: #f7f8fc;
+  }
+
+  .page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .book-form-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+  }
+
+  ion-item {
+    --background: transparent;
+    margin-bottom: 15px;
+  }
+
+  ion-input,
+  ion-textarea {
+    --border-radius: 12px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    background: #fff;
+    border: 1px solid #e4e4e4;
+  }
+
+  .preview-container {
+    text-align: center;
+    margin: 20px 0;
+
+    .preview-image {
+      width: 160px;
+      height: 220px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .btn-primary {
+    --background: #6c63ff;
+    --background-activated: #5a52e0;
+    --color: #fff;
+    --border-radius: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.25);
+  }
+
+  .btn-cancelar {
+    color: #6c63ff;
+    font-weight: 600;
+    margin-top: 5px;
+  }
+}

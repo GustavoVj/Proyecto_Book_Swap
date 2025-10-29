@@ -1,0 +1,75 @@
+<app-header>📚 Solicitudes</app-header>
+
+<ion-content class="app-content">
+  <div class="page-container">
+    <h1 class="title">Solicitudes de intercambio</h1>
+
+    <!-- 🔹 Recibidas -->
+    <h2 class="section-title">Recibidas</h2>
+    <div *ngIf="solicitudesRecibidas$ | async as recibidas; else cargando">
+      <div class="request-card" *ngFor="let r of recibidas">
+        <div class="request-info">
+          <div class="avatar">📩</div>
+          <div class="request-details">
+            <h2>Libro solicitado</h2>
+            <p><strong>ID libro:</strong> {{ r.bookRequestedId }}</p>
+            <p><strong>Ofrecido:</strong> {{ r.bookOfferedId }}</p>
+            <p class="date">{{ r.createdAt | date: 'medium' }}</p>
+          </div>
+          <div
+            class="status"
+            [class.pending]="r.status === 'pendiente'"
+            [class.accepted]="r.status === 'aceptado'"
+            [class.rejected]="r.status === 'rechazado'"
+          >
+            {{ r.status }}
+          </div>
+        </div>
+
+        <div class="actions" *ngIf="r.status === 'pendiente'">
+          <ion-button size="small" class="btn-primary" (click)="aceptar(r)">Aceptar</ion-button>
+          <ion-button size="small" class="btn-outline" (click)="rechazar(r)">Rechazar</ion-button>
+        </div>
+      </div>
+
+      <p class="muted" *ngIf="recibidas.length === 0">
+        No tienes solicitudes recibidas.
+      </p>
+    </div>
+
+    <!-- 🔹 Enviadas -->
+    <h2 class="section-title">Enviadas</h2>
+    <div *ngIf="solicitudesEnviadas$ | async as enviadas; else cargando">
+      <div class="request-card" *ngFor="let r of enviadas">
+        <div class="request-info">
+          <div class="avatar">📤</div>
+          <div class="request-details">
+            <h2>Has solicitado un intercambio</h2>
+            <p><strong>Libro solicitado:</strong> {{ r.bookRequestedId }}</p>
+            <p><strong>Libro ofrecido:</strong> {{ r.bookOfferedId }}</p>
+            <p class="date">{{ r.createdAt | date: 'medium' }}</p>
+          </div>
+          <div
+            class="status"
+            [class.pending]="r.status === 'pendiente'"
+            [class.accepted]="r.status === 'aceptado'"
+            [class.rejected]="r.status === 'rechazado'"
+          >
+            {{ r.status }}
+          </div>
+        </div>
+      </div>
+
+      <p class="muted" *ngIf="enviadas.length === 0">
+        No has enviado solicitudes todavía.
+      </p>
+    </div>
+
+    <ng-template #cargando>
+      <div class="loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Cargando solicitudes...</p>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>
